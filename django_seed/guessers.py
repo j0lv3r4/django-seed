@@ -3,6 +3,7 @@ from django.conf import settings
 from django.core.validators import validate_comma_separated_integer_list
 from django.utils import timezone
 from django.contrib.postgres.fields import ArrayField
+from django_hashids import HashidsField
 
 import random
 import re
@@ -72,6 +73,8 @@ class FieldTypeGuesser(object):
 
         if isinstance(field, DurationField): return lambda x: provider.duration()
         if isinstance(field, UUIDField): return lambda x: provider.uuid()
+
+        if isinstance(field, HashidsField): return lambda x: provider.uuid()
 
         if isinstance(field, BooleanField): return lambda x: faker.boolean()
         if isinstance(field, NullBooleanField): return lambda x: faker.null_boolean()
